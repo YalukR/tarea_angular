@@ -1,0 +1,40 @@
+.cursor {
+  position: fixed;
+  top: 0; left: 0;
+  pointer-events: none;
+  z-index: 9999;
+  transform: translate(-50%, -50%);
+  width: 0;
+  height: 0;
+  border-radius: 50%;
+  background: transparent;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 2px;
+  transition: width 0.3s ease, height 0.3s ease, background 0.3s ease;
+  overflow: hidden;
+}
+
+.cursor.active {
+  width: 120px;
+  height: 120px;
+  background: #fff;
+}
+
+.cursor-line {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  color: #111;
+  text-align: center;
+  text-transform: uppercase;
+  opacity: 0;
+  transition: opacity 0.2s ease 0.1s;
+}
+
+.cursor.active .cursor-line {
+  opacity: 1;
+}
