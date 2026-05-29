@@ -6,8 +6,8 @@ import { LayoutService } from '../../service/layout-service';
   imports: [],
   template: `
   <header class="site-header" [style.color]="layout.headerTheme()">
-    <a href="/" class="logo">MI APP</a>
-    <nav class="nav">
+    <a href="/" class="logo font-bold">BASIC/DEPT®</a>
+    <nav class="flex items-center gap-10 absolute left-1/2 -translate-x-1/2">
       <a href="#" class="nav-link">WORK</a>
       <a href="#" class="nav-link">ABOUT</a>
       <a href="#" class="nav-link">NEWS</a>
@@ -31,6 +31,25 @@ import { LayoutService } from '../../service/layout-service';
   .logo, .nav-link, .menu-dots {
     color: inherit;
     text-decoration: none;
+  }
+
+  .nav-link {
+    position: relative;
+  }
+
+  .nav-link::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 0;
+  height: 1px;
+  background: currentColor;
+  transition: width 0.3s ease;
+  }
+
+  .nav-link:hover::after {
+    width: 100%;
   }
 `,
 })
