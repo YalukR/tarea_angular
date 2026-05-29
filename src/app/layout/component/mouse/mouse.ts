@@ -37,8 +37,11 @@ export class Mouse implements OnInit, OnDestroy {
 
   @HostListener('document:mousemove', ['$event'])
   onMouseMove(e: MouseEvent) {
-    this.targetX = e.clientX;
-    this.targetY = e.clientY;
+    const anchor = this.cursor().anchor;
+    if (!anchor) {
+      this.targetX = e.clientX;
+      this.targetY = e.clientY;
+    }
   }
 
   ngOnInit() {
@@ -50,8 +53,12 @@ export class Mouse implements OnInit, OnDestroy {
   }
 
   private animate() {
-    this.x += (this.targetX - this.x) * this.ease;
-    this.y += (this.targetY - this.y) * this.ease;
+    const anchor = this.cursor().anchor;
+    const destX = anchor ? anchor.x : this.targetX;
+    const destY = anchor ? anchor.y - window.scrollY : this.targetY;
+
+    this.x += (destX - this.x) * this.ease;
+    this.y += (destY - this.y) * this.ease;
     this.rafId = requestAnimationFrame(() => this.animate());
   }
 }

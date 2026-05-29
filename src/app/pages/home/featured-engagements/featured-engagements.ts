@@ -10,6 +10,7 @@ import { LayoutService } from '../../../layout/service/layout.service';
 })
 export class FeaturedEngagements implements OnDestroy {
   @ViewChild('slider') sliderRef!: ElementRef<HTMLElement>;
+  @ViewChild('section') sectionRef!: ElementRef<HTMLElement>;
   layout = inject(LayoutService);
 
   scrollProgress = 0;
@@ -20,17 +21,29 @@ export class FeaturedEngagements implements OnDestroy {
   private velocity = 0;
   private rafId: any;
 
+  ngAfterViewInit() {
+    const el = this.sectionRef.nativeElement;
+    this.layout.setCursor(['DRAG'], '#f4b5b5', {
+      x: el.offsetLeft + el.offsetWidth * 0.85, // centro-derecha
+      y: el.offsetTop + el.offsetHeight / 2
+    });
+  }
+
   onSliderScroll(e: Event) {
     const el = e.target as HTMLElement;
     this.scrollProgress = (el.scrollLeft / (el.scrollWidth - el.clientWidth)) * 100;
   }
 
   onMouseEnter() {
-    this.layout.setCursor(['DRAG'], '#f4b5b5');
+    this.layout.setCursor(['DRAG'], '#f4b5b5', null);
   }
 
   onMouseLeave() {
-    this.layout.resetCursor();
+    const el = this.sectionRef.nativeElement;
+    this.layout.resetCursor({
+      x: el.offsetLeft + el.offsetWidth * 0.85,
+      y: el.offsetTop + el.offsetHeight / 2
+    });
     this.isDragging = false;
   }
 
@@ -41,7 +54,13 @@ export class FeaturedEngagements implements OnDestroy {
     this.startScrollLeft = this.sliderRef.nativeElement.scrollLeft;
     this.velocity = 0;
     cancelAnimationFrame(this.rafId);
-    this.layout.setCursor([], '#f4b5b5', true);
+    this.layout.setCursor([], '#f4b5b5', null, true); // ← small: true
+  }
+
+  onMouseUp() {
+    this.isDragging = false;
+    this.layout.setCursor(['DRAG'], '#f4b5b5', null, false); // ← vuelve a normal
+    this.momentum();
   }
 
   onMouseMove(e: MouseEvent) {
@@ -51,12 +70,6 @@ export class FeaturedEngagements implements OnDestroy {
     this.velocity = e.clientX - this.lastX;
     this.lastX = e.clientX;
     this.sliderRef.nativeElement.scrollLeft = this.startScrollLeft - delta;
-  }
-
-  onMouseUp() {
-    this.isDragging = false;
-    this.layout.setCursor(['DRAG'], '#f4b5b5');
-    this.momentum();
   }
 
   private momentum() {

@@ -10,8 +10,8 @@ import { LayoutService } from '../../../layout/service/layout.service';
   class="player-wrapper"
   [class.cursor-hidden]="isMuted"
   [class.cursor-visible]="!isMuted"
-  (mouseenter)="!isMuted ? null : layout.setCursor(['WATCH', 'REEL'])"
-  (mouseleave)="layout.resetCursor(); showControls = false"
+  (mouseenter)="!isMuted ? null : layout.setCursor(['WATCH', 'REEL'], '#fff', null)"
+  (mouseleave)="onMouseLeave(); showControls = false"
   (mousemove)="onMouseMove()">
   <video
     #videoEl
@@ -29,6 +29,7 @@ import { LayoutService } from '../../../layout/service/layout.service';
   styleUrl: './video-player.css',
 })
 export class VideoPlayer implements AfterViewInit {
+  readonly window = window
   layout = inject(LayoutService)
   @ViewChild('videoEl') videoRef!: ElementRef<HTMLVideoElement>;
 
@@ -44,6 +45,21 @@ export class VideoPlayer implements AfterViewInit {
     const video = this.videoRef.nativeElement;
     video.muted = true;
     video.play().then(() => this.isPlaying = true).catch(() => { });
+
+    const wrapper = video.closest('.player-wrapper') as HTMLElement;
+    const anchor = {
+      x: wrapper.offsetLeft + wrapper.offsetWidth / 2,
+      y: wrapper.offsetTop + wrapper.offsetHeight / 2
+    };
+    this.layout.setCursor(['WATCH', 'REEL'], '#fff', anchor);
+  }
+
+  onMouseLeave() {
+    const wrapper = this.videoRef.nativeElement.closest('.player-wrapper') as HTMLElement;
+    this.layout.resetCursor({
+      x: wrapper.offsetLeft + wrapper.offsetWidth / 2,
+      y: wrapper.offsetTop + wrapper.offsetHeight / 2
+    });
   }
 
   togglePlay(video: HTMLVideoElement) {

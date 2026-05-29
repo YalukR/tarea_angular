@@ -4,22 +4,28 @@ export interface CursorState {
   lines: string[];
   color?: string;
   small?: boolean;
+  anchor: { x: number; y: number } | null;
 }
 export type HeaderTheme = string
 
 @Injectable({ providedIn: 'root' })
 export class LayoutService {
-  cursor = signal<CursorState>({ active: false, lines: [] });
+  cursor = signal<CursorState>({ active: true, lines: [], color: 'transparent', anchor: null });
   headerTheme = signal<string>('#ffffff');
 
-
-
-  setCursor(lines: string[], color = '#fff', small = false) {
-    this.cursor.set({ active: true, lines, color, small });
+  setCursor(lines: string[], color: string = '#fff', anchor: CursorState['anchor'] = null, small: boolean = false) {
+    this.cursor.set({ active: true, lines, color, anchor, small });
   }
 
-  resetCursor() {
-    this.cursor.set({ active: false, lines: [] });
+  resetCursor(anchor: CursorState['anchor'] = null) {
+    const prev = this.cursor();
+    this.cursor.set({
+      active: anchor !== null,
+      lines: prev.lines,
+      color: prev.color,
+      anchor,
+      small: false
+    });
   }
 
   setHeaderTheme(color: string) {
