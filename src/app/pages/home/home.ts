@@ -1,10 +1,14 @@
 import { Component, inject, AfterViewInit, ElementRef, ViewChildren, QueryList } from '@angular/core';
 import { LayoutService } from '../../layout/service/layout-service';
 import { VideoPlayer } from './video-player/video-player';
+import { FeaturedEngagements } from './featured-engagements/featured-engagements';
 
 @Component({
   selector: 'app-home',
-  imports: [VideoPlayer],
+  imports: [
+    VideoPlayer,
+    FeaturedEngagements
+  ],
   templateUrl: './home.html',
   styleUrl: './home.css',
 })

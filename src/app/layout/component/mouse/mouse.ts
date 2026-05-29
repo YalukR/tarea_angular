@@ -9,26 +9,49 @@ import { LayoutService } from '../../service/layout-service';
 <div
   class="cursor"
   [class.active]="cursor().active"
+  [class.small]="cursor().small"
   [style.left.px]="x"
   [style.top.px]="y"
+  [style.background]="cursor().active ? cursor().color : 'transparent'"
 >
   <span *ngFor="let line of cursor().lines" class="cursor-line">{{ line }}</span>
-</div>`,
+</div>
+<div class="arrows" [class.visible]="cursor().small" [style.left.px]="x" [style.top.px]="y">
+  <span class="arrow">‹</span>
+  <span class="arrow">›</span>
+</div>
+  `,
   styleUrl: './mouse.css',
 })
-export class Mouse {
+export class Mouse implements OnInit, OnDestroy {
   private layout = inject(LayoutService);
   cursor = this.layout.cursor;
+
   x = 0;
   y = 0;
+
+  private targetX = 0;
+  private targetY = 0;
   private rafId: any;
+  private readonly ease = 0.22;
 
   @HostListener('document:mousemove', ['$event'])
   onMouseMove(e: MouseEvent) {
+    this.targetX = e.clientX;
+    this.targetY = e.clientY;
+  }
+
+  ngOnInit() {
+    this.animate();
+  }
+
+  ngOnDestroy() {
     cancelAnimationFrame(this.rafId);
-    this.rafId = requestAnimationFrame(() => {
-      this.x = e.clientX;
-      this.y = e.clientY;
-    });
+  }
+
+  private animate() {
+    this.x += (this.targetX - this.x) * this.ease;
+    this.y += (this.targetY - this.y) * this.ease;
+    this.rafId = requestAnimationFrame(() => this.animate());
   }
 }

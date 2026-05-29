@@ -63,7 +63,7 @@ export class VideoPlayer implements AfterViewInit {
     if (!video.muted) {
       this.layout.resetCursor();
     } else {
-      this.layout.setCursor(['WATCH', 'REEL']);
+      this.layout.setCursor(['WATCH', 'REEL'], '#fff');
     }
   }
 

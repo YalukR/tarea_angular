@@ -1,1 +1,33 @@
-<p>featured-engagements works!</p>
+<section class="bg-[#eeede9] px-20 py-16">
+
+    <div class="border-t border-black/20 pt-4 mb-16">
+        <div class="flex justify-between items-start mb-2">
+            <span class="font-mono text-xs">00</span>
+            <span class="font-mono text-xs">/0{{ items.length }}</span>
+            <span class="w-2 h-2 rounded-full bg-black mt-1"></span>
+        </div>
+    </div>
+
+    <h2 class="font-black text-5xl leading-tight mb-16">FEATURED<br>ENGAGEMENTS</h2>
+
+    <div #slider class="overflow-x-auto scrollbar-hide select-none cursor-none" (scroll)="onSliderScroll($event)"
+        (mouseenter)="onMouseEnter()" (mouseleave)="onMouseLeave()" (mousedown)="onMouseDown($event)"
+        (mousemove)="onMouseMove($event)" (mouseup)="onMouseUp()">
+        <div class="flex gap-16 w-max pb-8">
+            @for (item of items; track item.title) {
+            <div class="w-[30vw] flex-shrink-0">
+                <img [src]="item.logo" [alt]="item.alt" class="h-20 object-contain object-left brightness-0 mb-3" />
+                <div class="w-6 h-px bg-black mb-10"></div>
+                <h3 class="font-black text-xl tracking-wide mb-4">{{ item.title }}</h3>
+                <p class="text-base leading-relaxed text-gray-700 max-w-xs">{{ item.description }}</p>
+            </div>
+            }
+        </div>
+    </div>
+
+    <div class="h-px bg-black/20 w-full relative">
+        <div class="h-full bg-black absolute top-0 left-0 transition-all duration-100" [style.width.%]="scrollProgress">
+        </div>
+    </div>
+
+</section>
