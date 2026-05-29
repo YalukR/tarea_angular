@@ -1,3 +1,30 @@
 /* You can add global styles to this file, and also import other style files */
 
 @import 'tailwindcss';
+
+.btn-fill {
+  position: relative;
+  overflow: hidden;
+  border: 1px solid var(--btn-color, #000);
+  color: var(--btn-color, #000);
+  z-index: 0;
+}
+
+.btn-fill::after {
+  content: '';
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  height: 0;
+  background: var(--btn-color, #000);
+  transition: height 0.3s ease;
+  z-index: -1;
+}
+
+.btn-fill:hover::after {
+  height: 100%;
+}
+
+.btn-fill:hover {
+  color: var(--btn-hover-color, #fff);
+  transition: color 0.3s ease;
+}
