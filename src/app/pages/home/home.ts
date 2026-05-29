@@ -2,12 +2,14 @@ import { Component, inject, AfterViewInit, ElementRef, ViewChildren, QueryList }
 import { LayoutService } from '../../layout/service/layout-service';
 import { VideoPlayer } from './video-player/video-player';
 import { FeaturedEngagements } from './featured-engagements/featured-engagements';
+import { AboutUs } from './about-us/about-us';
 
 @Component({
   selector: 'app-home',
   imports: [
     VideoPlayer,
-    FeaturedEngagements
+    FeaturedEngagements,
+    AboutUs
   ],
   templateUrl: './home.html',
   styleUrl: './home.css',
