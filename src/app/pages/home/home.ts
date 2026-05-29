@@ -1,15 +1,17 @@
 import { Component, inject, AfterViewInit, ElementRef, ViewChildren, QueryList } from '@angular/core';
-import { LayoutService } from '../../layout/service/layout-service';
+import { LayoutService } from '../../layout/service/layout.service';
 import { VideoPlayer } from './video-player/video-player';
 import { FeaturedEngagements } from './featured-engagements/featured-engagements';
 import { AboutUs } from './about-us/about-us';
+import { FeaturedNews } from './featured-news/featured-news';
 
 @Component({
   selector: 'app-home',
   imports: [
     VideoPlayer,
     FeaturedEngagements,
-    AboutUs
+    AboutUs,
+    FeaturedNews
   ],
   templateUrl: './home.html',
   styleUrl: './home.css',
