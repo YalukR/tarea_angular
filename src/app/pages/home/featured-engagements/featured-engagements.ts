@@ -24,7 +24,7 @@ export class FeaturedEngagements implements OnDestroy {
   ngAfterViewInit() {
     const el = this.sectionRef.nativeElement;
     this.layout.setCursor(['DRAG'], '#f4b5b5', {
-      x: el.offsetLeft + el.offsetWidth * 0.85, // centro-derecha
+      x: el.offsetLeft + el.offsetWidth * 0.85,
       y: el.offsetTop + el.offsetHeight / 2
     });
   }
@@ -54,12 +54,12 @@ export class FeaturedEngagements implements OnDestroy {
     this.startScrollLeft = this.sliderRef.nativeElement.scrollLeft;
     this.velocity = 0;
     cancelAnimationFrame(this.rafId);
-    this.layout.setCursor([], '#f4b5b5', null, true); // ← small: true
+    this.layout.setCursor([], '#f4b5b5', null, true); 
   }
 
   onMouseUp() {
     this.isDragging = false;
-    this.layout.setCursor(['DRAG'], '#f4b5b5', null, false); // ← vuelve a normal
+    this.layout.setCursor(['DRAG'], '#f4b5b5', null, false);
     this.momentum();
   }
 

@@ -31,7 +31,10 @@ export class Home implements AfterViewInit {
           if (color) this.layout.setHeaderTheme(color);
         }
       });
-    }, { threshold: 0.5 });
+    }, {
+      threshold: 0,
+      rootMargin: '-50% 0px -50% 0px'
+    });
 
     this.sections.forEach(s => observer.observe(s.nativeElement));
   }

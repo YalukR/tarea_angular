@@ -27,23 +27,14 @@ export class AboutUs implements AfterViewInit, OnDestroy {
       const sectionTop = rect.top;
       const sectionHeight = rect.height;
 
-      // Visible cuando la sección está en pantalla
       this.isVisible = sectionTop < window.innerHeight && sectionTop + sectionHeight > 0;
 
       if (this.isVisible) {
-        this.layout.setHeaderTheme('#f4b5b5');
-
-        // Texto sticky manual
         this.textTop = Math.max(0, Math.min(-sectionTop, sectionHeight - window.innerHeight));
-
-        // Parallax video
         const progress = -sectionTop / (sectionHeight - window.innerHeight);
         this.videoOffset = progress * (sectionHeight - window.innerHeight) * 0.3;
-      } else {
-        this.layout.setHeaderTheme('#ffffff');
       }
     }
-
     this.rafId = requestAnimationFrame(() => this.animate());
   }
 
