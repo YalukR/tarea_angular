@@ -1,5 +1,5 @@
 import { Component, inject, HostListener, signal } from '@angular/core';
-import { LayoutService } from '../../service/layout-service';
+import { LayoutService } from '../../service/layout.service';
 
 @Component({
   selector: 'app-header',
