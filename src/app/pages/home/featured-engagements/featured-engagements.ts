@@ -1,4 +1,4 @@
-import { Component, ViewChild, ElementRef, inject } from '@angular/core';
+import { Component, ViewChild, ElementRef, inject, OnDestroy } from '@angular/core';
 import { FeaturedEngagement } from '../../../core/models/featured-engagement-model';
 import { LayoutService } from '../../../layout/service/layout-service';
 
@@ -8,7 +8,7 @@ import { LayoutService } from '../../../layout/service/layout-service';
   templateUrl: './featured-engagements.html',
   styleUrl: './featured-engagements.css',
 })
-export class FeaturedEngagements {
+export class FeaturedEngagements implements OnDestroy {
   @ViewChild('slider') sliderRef!: ElementRef<HTMLElement>;
   layout = inject(LayoutService);
 
@@ -16,6 +16,9 @@ export class FeaturedEngagements {
   private isDragging = false;
   private startX = 0;
   private startScrollLeft = 0;
+  private lastX = 0;
+  private velocity = 0;
+  private rafId: any;
 
   onSliderScroll(e: Event) {
     const el = e.target as HTMLElement;
@@ -34,7 +37,10 @@ export class FeaturedEngagements {
   onMouseDown(e: MouseEvent) {
     this.isDragging = true;
     this.startX = e.clientX;
+    this.lastX = e.clientX;
     this.startScrollLeft = this.sliderRef.nativeElement.scrollLeft;
+    this.velocity = 0;
+    cancelAnimationFrame(this.rafId);
     this.layout.setCursor([], '#f4b5b5', true);
   }
 
@@ -42,12 +48,30 @@ export class FeaturedEngagements {
     if (!this.isDragging) return;
     e.preventDefault();
     const delta = e.clientX - this.startX;
+    this.velocity = e.clientX - this.lastX;
+    this.lastX = e.clientX;
     this.sliderRef.nativeElement.scrollLeft = this.startScrollLeft - delta;
   }
 
   onMouseUp() {
     this.isDragging = false;
     this.layout.setCursor(['DRAG'], '#f4b5b5');
+    this.momentum();
+  }
+
+  private momentum() {
+    const el = this.sliderRef.nativeElement;
+    this.velocity *= 0.95;
+
+    if (Math.abs(this.velocity) < 0.5) return;
+
+    el.scrollLeft -= this.velocity;
+    this.scrollProgress = (el.scrollLeft / (el.scrollWidth - el.clientWidth)) * 100;
+    this.rafId = requestAnimationFrame(() => this.momentum());
+  }
+
+  ngOnDestroy() {
+    cancelAnimationFrame(this.rafId);
   }
 
   items: FeaturedEngagement[] = [
