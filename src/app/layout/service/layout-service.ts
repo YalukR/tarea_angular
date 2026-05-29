@@ -5,12 +5,12 @@ export interface CursorState {
   lines: string[];
 }
 
-export type HeaderTheme = 'light' | 'dark';
+export type HeaderTheme = string
 
 @Injectable({ providedIn: 'root' })
 export class LayoutService {
   cursor = signal<CursorState>({ active: false, lines: [] });
-  headerTheme = signal<HeaderTheme>('dark');
+  headerTheme = signal<string>('#ffffff');
 
   setCursor(lines: string[]) {
     this.cursor.set({ active: true, lines });
@@ -20,7 +20,7 @@ export class LayoutService {
     this.cursor.set({ active: false, lines: [] });
   }
 
-  setHeaderTheme(theme: HeaderTheme) {
-    this.headerTheme.set(theme);
+  setHeaderTheme(color: string) {
+    this.headerTheme.set(color);
   }
 }

@@ -13,7 +13,14 @@
   background: #000;
   overflow: hidden;
   font-family: 'IBM Plex Mono', monospace;
+}
+
+.player-wrapper.cursor-hidden {
   cursor: none;
+}
+
+.player-wrapper.cursor-visible {
+  cursor: default;
 }
 
 .video {
@@ -30,7 +37,7 @@
   left: 0;
   right: 0;
   padding: 24px 32px 28px;
-  background: linear-gradient(to top, rgba(0,0,0,0.7) 0%, transparent 100%);
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.7) 0%, transparent 100%);
   transition: opacity 0.4s ease;
 }
 
@@ -43,18 +50,21 @@
   position: relative;
   width: 100%;
   height: 2px;
-  background: rgba(255,255,255,0.2);
+  background: rgba(255, 255, 255, 0.2);
   cursor: pointer;
   margin-bottom: 14px;
   border-radius: 2px;
   transition: height 0.15s ease;
 }
 
-.progress-bar:hover { height: 4px; }
+.progress-bar:hover {
+  height: 4px;
+}
 
 .progress-fill {
   position: absolute;
-  top: 0; left: 0;
+  top: 0;
+  left: 0;
   height: 100%;
   background: #fff;
   border-radius: 2px;
@@ -65,7 +75,8 @@
   position: absolute;
   top: 50%;
   transform: translate(-50%, -50%) scale(0);
-  width: 12px; height: 12px;
+  width: 12px;
+  height: 12px;
   background: #fff;
   border-radius: 50%;
   pointer-events: none;
@@ -90,7 +101,7 @@
 .ctrl-btn {
   background: none;
   border: none;
-  color: rgba(255,255,255,0.85);
+  color: rgba(255, 255, 255, 0.85);
   cursor: pointer;
   padding: 6px;
   display: flex;
@@ -101,14 +112,17 @@
 
 .ctrl-btn:hover {
   color: #fff;
-  background: rgba(255,255,255,0.1);
+  background: rgba(255, 255, 255, 0.1);
 }
 
-.ctrl-btn svg { width: 22px; height: 22px; }
+.ctrl-btn svg {
+  width: 22px;
+  height: 22px;
+}
 
 .time {
   font-size: 11px;
-  color: rgba(255,255,255,0.5);
+  color: rgba(255, 255, 255, 0.5);
   letter-spacing: 0.05em;
   margin-left: 10px;
   user-select: none;
@@ -123,9 +137,9 @@
   display: flex;
   align-items: center;
   gap: 8px;
-  background: rgba(0,0,0,0.55);
+  background: rgba(0, 0, 0, 0.55);
   backdrop-filter: blur(8px);
-  border: 1px solid rgba(255,255,255,0.12);
+  border: 1px solid rgba(255, 255, 255, 0.12);
   color: #fff;
   padding: 8px 16px 8px 12px;
   border-radius: 100px;
@@ -135,10 +149,20 @@
   animation: fadeInUp 0.4s ease;
 }
 
-.mute-hint svg { width: 16px; height: 16px; opacity: 0.7; }
-
-@keyframes fadeInUp {
-  from { opacity: 0; transform: translateX(-50%) translateY(8px); }
-  to   { opacity: 1; transform: translateX(-50%) translateY(0); }
+.mute-hint svg {
+  width: 16px;
+  height: 16px;
+  opacity: 0.7;
 }
 
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateX(-50%) translateY(8px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+  }
+}

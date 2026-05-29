@@ -6,12 +6,13 @@ import { LayoutService } from '../../../layout/service/layout-service';
   selector: 'app-video-player',
   imports: [CommonModule],
   template: `
-<div class="player-wrapper" 
-     class="player-wrapper" 
-     (mouseenter)="layout.setCursor(['WATCH', 'REEL'])" 
-     (mouseleave)="layout.resetCursor()"
-     (mousemove)="onMouseMove()" 
-     (mouseleave)="showControls = false">
+<div 
+  class="player-wrapper"
+  [class.cursor-hidden]="isMuted"
+  [class.cursor-visible]="!isMuted"
+  (mouseenter)="!isMuted ? null : layout.setCursor(['WATCH', 'REEL'])"
+  (mouseleave)="layout.resetCursor(); showControls = false"
+  (mousemove)="onMouseMove()">
   <video
     #videoEl
     class="video"
@@ -58,6 +59,12 @@ export class VideoPlayer implements AfterViewInit {
   toggleMute(video: HTMLVideoElement) {
     video.muted = !video.muted;
     this.isMuted = video.muted;
+
+    if (!video.muted) {
+      this.layout.resetCursor();
+    } else {
+      this.layout.setCursor(['WATCH', 'REEL']);
+    }
   }
 
   onTimeUpdate(video: HTMLVideoElement) {

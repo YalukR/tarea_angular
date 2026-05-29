@@ -13,12 +13,14 @@ export class Home implements AfterViewInit {
 
   @ViewChildren('section') sections!: QueryList<ElementRef>;
 
+
+
   ngAfterViewInit() {
     const observer = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
         if (entry.isIntersecting) {
-          const theme = entry.target.getAttribute('data-theme') as 'light' | 'dark';
-          if (theme) this.layout.setHeaderTheme(theme);
+          const color = entry.target.getAttribute('data-theme');
+          if (color) this.layout.setHeaderTheme(color);
         }
       });
     }, { threshold: 0.5 });
