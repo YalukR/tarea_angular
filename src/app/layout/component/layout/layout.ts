@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { Header } from '../header/header';
 import { Footer } from '../footer/footer';
 import { Mouse } from '../mouse/mouse';
+import { Cookies } from '../cookies/cookies';
 import { RouterOutlet } from '@angular/router';
 
 @Component({
@@ -11,6 +12,7 @@ import { RouterOutlet } from '@angular/router';
     Header,
     Footer,
     Mouse,
+    Cookies
   ],
   templateUrl: './layout.html',
   styleUrl: './layout.css',
