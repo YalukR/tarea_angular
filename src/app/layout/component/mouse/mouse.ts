@@ -16,6 +16,12 @@ import { LayoutService } from '../../service/layout.service';
 >
   <span *ngFor="let line of cursor().lines" class="cursor-line">{{ line }}</span>
 </div>
+
+<div class="cursor-subtext" [class.visible]="cursor().active && cursor().subtext?.length"
+  [style.left.px]="x" [style.top.px]="y">
+  <span *ngFor="let line of cursor().subtext" class="subtext-line">{{ line }}</span>
+</div>
+
 <div class="arrows" [class.visible]="cursor().small" [style.left.px]="x" [style.top.px]="y">
   <span class="arrow">‹</span>
   <span class="arrow">›</span>

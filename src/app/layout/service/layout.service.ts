@@ -5,6 +5,7 @@ export interface CursorState {
   color?: string;
   small?: boolean;
   anchor: { x: number; y: number } | null;
+  subtext?: string[];
 }
 export type HeaderTheme = string
 
@@ -14,14 +15,11 @@ export class LayoutService {
   headerTheme = signal<string>('#ffffff');
   headerBg = signal<string>('transparent');
 
-  setHeaderBg(color: string) {
-    this.headerBg.set(color);
+  
+  setCursor(lines: string[], color: string = '#fff', anchor: CursorState['anchor'] = null, small: boolean = false, subtext: string[] = []) {
+    this.cursor.set({ active: true, lines, color, anchor, small, subtext });
   }
-
-  setCursor(lines: string[], color: string = '#fff', anchor: CursorState['anchor'] = null, small: boolean = false) {
-    this.cursor.set({ active: true, lines, color, anchor, small });
-  }
-
+  
   resetCursor(anchor: CursorState['anchor'] = null) {
     const prev = this.cursor();
     this.cursor.set({
@@ -29,10 +27,15 @@ export class LayoutService {
       lines: prev.lines,
       color: prev.color,
       anchor,
-      small: false
+      small: false,
+      subtext: prev.subtext
     });
   }
-
+  
+  setHeaderBg(color: string) {
+    this.headerBg.set(color);
+  }
+  
   setHeaderTheme(color: string) {
     this.headerTheme.set(color);
   }

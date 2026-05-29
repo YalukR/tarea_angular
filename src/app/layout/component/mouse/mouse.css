@@ -1,6 +1,7 @@
 .cursor {
   position: fixed;
-  top: 0; left: 0;
+  top: 0;
+  left: 0;
   pointer-events: none;
   z-index: 9999;
   transform: translate(-50%, -50%);
@@ -45,7 +46,8 @@
 
 .arrows {
   position: fixed;
-  top: 0; left: 0;
+  top: 0;
+  left: 0;
   pointer-events: none;
   z-index: 9999;
   transform: translate(-50%, -50%);
@@ -64,4 +66,34 @@
   font-size: 20px;
   color: #c4a0a0;
   line-height: 1;
+}
+
+.cursor-subtext {
+  position: fixed;
+  top: 0;
+  left: 0;
+  pointer-events: none;
+  z-index: 9999;
+  transform: translate(-50%, calc(60px + 16px));
+  /* debajo del círculo */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+
+.cursor-subtext.visible {
+  opacity: 1;
+}
+
+.subtext-line {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  color: #fff;
+  text-align: center;
+  text-transform: uppercase;
 }

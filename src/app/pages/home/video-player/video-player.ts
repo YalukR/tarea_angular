@@ -10,7 +10,7 @@ import { LayoutService } from '../../../layout/service/layout.service';
   class="player-wrapper"
   [class.cursor-hidden]="isMuted"
   [class.cursor-visible]="!isMuted"
-  (mouseenter)="!isMuted ? null : layout.setCursor(['WATCH', 'REEL'], '#fff', null)"
+  (mouseenter)="!isMuted ? null : layout.setCursor(['WATCH', 'REEL'], '#fff', null, false, ['BASIC/DEPT®', '2010–∞'])"
   (mouseleave)="onMouseLeave(); showControls = false"
   (mousemove)="onMouseMove()">
   <video
@@ -29,8 +29,8 @@ import { LayoutService } from '../../../layout/service/layout.service';
   styleUrl: './video-player.css',
 })
 export class VideoPlayer implements AfterViewInit {
-  readonly window = window
-  layout = inject(LayoutService)
+  readonly window = window;
+  layout = inject(LayoutService);
   @ViewChild('videoEl') videoRef!: ElementRef<HTMLVideoElement>;
 
   isPlaying = false;
@@ -51,7 +51,7 @@ export class VideoPlayer implements AfterViewInit {
       x: wrapper.offsetLeft + wrapper.offsetWidth / 2,
       y: wrapper.offsetTop + wrapper.offsetHeight / 2
     };
-    this.layout.setCursor(['WATCH', 'REEL'], '#fff', anchor);
+    this.layout.setCursor(['WATCH', 'REEL'], '#fff', anchor, false, ['BASIC/DEPT®', '2010–∞']);
   }
 
   onMouseLeave() {
@@ -75,11 +75,10 @@ export class VideoPlayer implements AfterViewInit {
   toggleMute(video: HTMLVideoElement) {
     video.muted = !video.muted;
     this.isMuted = video.muted;
-
     if (!video.muted) {
       this.layout.resetCursor();
     } else {
-      this.layout.setCursor(['WATCH', 'REEL'], '#fff');
+      this.layout.setCursor(['WATCH', 'REEL'], '#fff', null, false, ['BASIC/DEPT®', '2010–∞']);
     }
   }
 
