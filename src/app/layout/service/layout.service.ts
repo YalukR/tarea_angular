@@ -12,6 +12,11 @@ export type HeaderTheme = string
 export class LayoutService {
   cursor = signal<CursorState>({ active: true, lines: [], color: 'transparent', anchor: null });
   headerTheme = signal<string>('#ffffff');
+  headerBg = signal<string>('transparent');
+
+  setHeaderBg(color: string) {
+    this.headerBg.set(color);
+  }
 
   setCursor(lines: string[], color: string = '#fff', anchor: CursorState['anchor'] = null, small: boolean = false) {
     this.cursor.set({ active: true, lines, color, anchor, small });

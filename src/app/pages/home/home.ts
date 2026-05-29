@@ -28,7 +28,9 @@ export class Home implements AfterViewInit {
       entries.forEach(entry => {
         if (entry.isIntersecting) {
           const color = entry.target.getAttribute('data-theme');
+          const bg = entry.target.getAttribute('data-bg');
           if (color) this.layout.setHeaderTheme(color);
+          if (bg) this.layout.setHeaderBg(bg);
         }
       });
     }, {

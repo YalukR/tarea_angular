@@ -8,8 +8,8 @@ import { LayoutService } from '../../service/layout.service';
   <header
     class="site-header"
     [class.hidden]="!visible()"
-    [class.scrolled]="!isTop()"
     [style.color]="layout.headerTheme()"
+    [style.background]="layout.headerBg()"
     (mouseenter)="onMouseEnter()"
     (mouseleave)="onMouseLeave()">
     <a href="/" class="logo font-bold">BASIC/DEPT®</a>
@@ -21,7 +21,7 @@ import { LayoutService } from '../../service/layout.service';
     </nav>
     <button class="menu-dots" aria-label="Más opciones">···</button>
   </header>
-  `,
+`,
   styles: `
   .site-header {
     position: fixed;
@@ -31,16 +31,10 @@ import { LayoutService } from '../../service/layout.service';
     align-items: center;
     justify-content: space-between;
     padding: 24px 40px;
-    background: transparent;
     transition: color 0.3s ease, transform 0.4s ease, background 0.3s ease;
   }
   .site-header.hidden {
     transform: translateY(-100%);
-  }
-  .site-header.scrolled {
-    background: linear-gradient(to bottom, rgba(255,255,255,0.85) 0%, transparent 100%);
-    backdrop-filter: blur(2px);
-    -webkit-backdrop-filter: blur(2px);
   }
   .logo, .nav-link, .menu-dots {
     color: inherit;
@@ -60,21 +54,18 @@ import { LayoutService } from '../../service/layout.service';
   .nav-link:hover::after {
     width: 100%;
   }
-  `,
+`,
 })
 export class Header {
   layout = inject(LayoutService);
   visible = signal(true);
-  isTop = signal(true);
   private lastScrollY = 0;
   private isHovered = false;
 
   @HostListener('window:scroll')
   onScroll() {
-    const currentY = window.scrollY;
-    this.isTop.set(currentY < window.innerHeight * 0.9);
-
     if (this.isHovered) return;
+    const currentY = window.scrollY;
     this.visible.set(currentY < this.lastScrollY || currentY < 80);
     this.lastScrollY = currentY;
   }
