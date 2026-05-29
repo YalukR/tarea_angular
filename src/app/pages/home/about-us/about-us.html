@@ -1,5 +1,5 @@
 <section #section class="about-section">
-    <div class="about-text">
+    <div class="about-text" [style.transform]="'translateY(' + textTop + 'px)'">
         <h2>BASIC/DEPT®<br>HELPS BRANDS ●<br>CONNECT W/<br>CULTURE</h2>
         <p class="adweek">ADWEEK <strong>AGENCY SPOTLIGHT</strong></p>
         <button class="btn-fill self-start font-mono text-[10px] tracking-widest uppercase px-5 py-2 rounded-full mt-8"
@@ -7,10 +7,9 @@
             ABOUT US
         </button>
     </div>
-
     <div class="video-container">
         <div class="video-inner" [style.transform]="'translateY(' + videoOffset + 'px)'">
-            <video #video autoplay muted loop playsinline src="videos/aboutUs.mp4"></video>
+            <video autoplay muted loop playsinline src="videos/aboutUs.mp4"></video>
         </div>
     </div>
 </section>
