@@ -1,10 +1,12 @@
 import { Component, inject, HostListener, signal } from '@angular/core';
 import { LayoutService } from '../../service/layout.service';
+import { InternalWorkComponent } from '../../../pages/home/internal-work/internal-work';
 
 @Component({
   selector: 'app-header',
-  imports: [],
+  imports: [InternalWorkComponent],
   template: `
+  <app-internal-work #drawer></app-internal-work>
   <header
     class="site-header"
     [class.hidden]="!visible()"
@@ -19,7 +21,7 @@ import { LayoutService } from '../../service/layout.service';
       <a href="#" class="nav-link underline-fill">NEWS</a>
       <a href="#" class="nav-link underline-fill">CONTACT</a>
     </nav>
-    <button class="menu-dots" aria-label="Más opciones">···</button>
+      <button class="menu-dots" (click)="drawer.open()" aria-label="Más opciones">···</button>
   </header>
 `,
   styles: `
@@ -53,6 +55,19 @@ import { LayoutService } from '../../service/layout.service';
   }
   .nav-link:hover::after {
     width: 100%;
+  }
+
+  .menu-dots {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 18px;
+    letter-spacing: 3px;
+    padding: 0;
+    transition: letter-spacing 0.3s ease;
+  }
+  .menu-dots:hover {
+    letter-spacing: 6px;
   }
 `,
 })
