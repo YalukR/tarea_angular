@@ -6,19 +6,20 @@ import { LayoutService } from '../../service/layout.service';
   imports: [],
   template: `
   <header
-  class="site-header"
-  [class.hidden]="!visible()"
-  [style.color]="layout.headerTheme()"
-  (mouseenter)="onMouseEnter()"
-  (mouseleave)="onMouseLeave()">
-  <a href="/" class="logo font-bold">BASIC/DEPT®</a>
-  <nav class="flex items-center gap-10 absolute left-1/2 -translate-x-1/2">
-  <a href="#" class="nav-link underline-fill">WORK</a>
-  <a href="#" class="nav-link underline-fill">ABOUT</a>
-  <a href="#" class="nav-link underline-fill">NEWS</a>
-  <a href="#" class="nav-link underline-fill">CONTACT</a>
-  </nav>
-  <button class="menu-dots" aria-label="Más opciones">···</button>
+    class="site-header"
+    [class.hidden]="!visible()"
+    [class.scrolled]="!isTop()"
+    [style.color]="layout.headerTheme()"
+    (mouseenter)="onMouseEnter()"
+    (mouseleave)="onMouseLeave()">
+    <a href="/" class="logo font-bold">BASIC/DEPT®</a>
+    <nav class="flex items-center gap-10 absolute left-1/2 -translate-x-1/2">
+      <a href="#" class="nav-link underline-fill">WORK</a>
+      <a href="#" class="nav-link underline-fill">ABOUT</a>
+      <a href="#" class="nav-link underline-fill">NEWS</a>
+      <a href="#" class="nav-link underline-fill">CONTACT</a>
+    </nav>
+    <button class="menu-dots" aria-label="Más opciones">···</button>
   </header>
   `,
   styles: `
@@ -31,10 +32,15 @@ import { LayoutService } from '../../service/layout.service';
     justify-content: space-between;
     padding: 24px 40px;
     background: transparent;
-    transition: color 0.3s ease, transform 0.4s ease;
+    transition: color 0.3s ease, transform 0.4s ease, background 0.3s ease;
   }
   .site-header.hidden {
     transform: translateY(-100%);
+  }
+  .site-header.scrolled {
+    background: linear-gradient(to bottom, rgba(255,255,255,0.85) 0%, transparent 100%);
+    backdrop-filter: blur(2px);
+    -webkit-backdrop-filter: blur(2px);
   }
   .logo, .nav-link, .menu-dots {
     color: inherit;
@@ -45,11 +51,11 @@ import { LayoutService } from '../../service/layout.service';
   }
   .nav-link::after {
     content: '';
-position: absolute;
-bottom: -2px; left: 0;
-width: 0; height: 1px;
-background: currentColor;
-transition: width 0.3s ease;
+    position: absolute;
+    bottom: -2px; left: 0;
+    width: 0; height: 1px;
+    background: currentColor;
+    transition: width 0.3s ease;
   }
   .nav-link:hover::after {
     width: 100%;
@@ -59,15 +65,16 @@ transition: width 0.3s ease;
 export class Header {
   layout = inject(LayoutService);
   visible = signal(true);
-
+  isTop = signal(true);
   private lastScrollY = 0;
   private isHovered = false;
 
   @HostListener('window:scroll')
   onScroll() {
-    if (this.isHovered) return;
-
     const currentY = window.scrollY;
+    this.isTop.set(currentY < window.innerHeight * 0.9);
+
+    if (this.isHovered) return;
     this.visible.set(currentY < this.lastScrollY || currentY < 80);
     this.lastScrollY = currentY;
   }
