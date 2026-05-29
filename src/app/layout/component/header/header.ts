@@ -13,10 +13,10 @@ import { LayoutService } from '../../service/layout-service';
   (mouseleave)="onMouseLeave()">
   <a href="/" class="logo font-bold">BASIC/DEPT®</a>
   <nav class="flex items-center gap-10 absolute left-1/2 -translate-x-1/2">
-  <a href="#" class="nav-link">WORK</a>
-  <a href="#" class="nav-link">ABOUT</a>
-  <a href="#" class="nav-link">NEWS</a>
-  <a href="#" class="nav-link">CONTACT</a>
+  <a href="#" class="nav-link underline-fill">WORK</a>
+  <a href="#" class="nav-link underline-fill">ABOUT</a>
+  <a href="#" class="nav-link underline-fill">NEWS</a>
+  <a href="#" class="nav-link underline-fill">CONTACT</a>
   </nav>
   <button class="menu-dots" aria-label="Más opciones">···</button>
   </header>
