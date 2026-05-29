@@ -1,6 +1,6 @@
 import { Component, ViewChild, ElementRef, inject, OnDestroy } from '@angular/core';
-import { FeaturedEngagement } from '../../../core/models/featured-engagement-model';
-import { LayoutService } from '../../../layout/service/layout-service';
+import { FeaturedEngagement } from '../../../core/models/featured-engagement.model';
+import { LayoutService } from '../../../layout/service/layout.service';
 
 @Component({
   selector: 'app-featured-engagements',
