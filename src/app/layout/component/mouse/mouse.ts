@@ -1,6 +1,6 @@
 import { Component, inject, OnDestroy, OnInit, HostListener } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { LayoutService } from '../../service/layout-service';
+import { LayoutService } from '../../service/layout.service';
 
 @Component({
   selector: 'app-mouse',

@@ -1,6 +1,6 @@
 import { Component, AfterViewInit, ViewChild, ElementRef, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { LayoutService } from '../../../layout/service/layout-service';
+import { LayoutService } from '../../../layout/service/layout.service';
 
 @Component({
   selector: 'app-video-player',
