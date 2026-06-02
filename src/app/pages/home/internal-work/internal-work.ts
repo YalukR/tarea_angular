@@ -1,6 +1,7 @@
-import { Component, signal } from '@angular/core';
+import { Component, signal, ViewChild, ElementRef, inject, OnDestroy, AfterViewInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { InternalWork } from '../../../core/models/internal-work.models';
+import { LayoutService } from '../../../layout/service/layout.service';
 
 @Component({
   selector: 'app-internal-work',
@@ -8,11 +9,69 @@ import { InternalWork } from '../../../core/models/internal-work.models';
   templateUrl: './internal-work.html',
   styleUrl: './internal-work.css',
 })
-export class InternalWorkComponent {
+export class InternalWorkComponent implements AfterViewInit, OnDestroy {
+  @ViewChild('slider') sliderRef!: ElementRef<HTMLElement>;
+
   isOpen = signal(false);
+  layout = inject(LayoutService);
+
+  private isDragging = false;
+  private startX = 0;
+  private startScrollLeft = 0;
+  private lastX = 0;
+  private velocity = 0;
+  private rafId: any;
 
   open() { this.isOpen.set(true); }
   close() { this.isOpen.set(false); }
+
+  ngAfterViewInit() { }
+
+  onMouseEnter() {
+    this.layout.setCursor(['DRAG'], '#f4b5b5', null);
+  }
+
+  onMouseLeave() {
+    this.layout.resetCursor(null);
+    this.isDragging = false;
+  }
+
+  onMouseDown(e: MouseEvent) {
+    this.isDragging = true;
+    this.startX = e.clientX;
+    this.lastX = e.clientX;
+    this.startScrollLeft = this.sliderRef.nativeElement.scrollLeft;
+    this.velocity = 0;
+    cancelAnimationFrame(this.rafId);
+    this.layout.setCursor([], '#f4b5b5', null, true);
+  }
+
+  onMouseUp() {
+    this.isDragging = false;
+    this.layout.setCursor(['DRAG'], '#f4b5b5', null, false);
+    this.momentum();
+  }
+
+  onMouseMove(e: MouseEvent) {
+    if (!this.isDragging) return;
+    e.preventDefault();
+    const delta = e.clientX - this.startX;
+    this.velocity = e.clientX - this.lastX;
+    this.lastX = e.clientX;
+    this.sliderRef.nativeElement.scrollLeft = this.startScrollLeft - delta;
+  }
+
+  private momentum() {
+    const el = this.sliderRef.nativeElement;
+    this.velocity *= 0.95;
+    if (Math.abs(this.velocity) < 0.5) return;
+    el.scrollLeft -= this.velocity;
+    this.rafId = requestAnimationFrame(() => this.momentum());
+  }
+
+  ngOnDestroy() {
+    cancelAnimationFrame(this.rafId);
+  }
 
   items: InternalWork[] = [
     { id: 1, image: 'images/internal-work/menu1.png', title: 'B/D® JAMS', year: '©2022', category: "IT'S A VIBE", description: 'A curated playlist series.' },

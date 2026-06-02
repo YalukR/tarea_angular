@@ -6,70 +6,74 @@ import { InternalWorkComponent } from '../../../pages/home/internal-work/interna
   selector: 'app-header',
   imports: [InternalWorkComponent],
   template: `
-  <app-internal-work #drawer></app-internal-work>
-  <header
-    class="site-header"
-    [class.hidden]="!visible()"
-    [style.color]="layout.headerTheme()"
-    [style.background]="layout.headerBg()"
-    (mouseenter)="onMouseEnter()"
-    (mouseleave)="onMouseLeave()">
-    <a href="/" class="logo font-bold">BASIC/DEPT®</a>
-    <nav class="flex items-center gap-10 absolute left-1/2 -translate-x-1/2">
-      <a href="#" class="nav-link underline-fill">WORK</a>
-      <a href="#" class="nav-link underline-fill">ABOUT</a>
-      <a href="#" class="nav-link underline-fill">NEWS</a>
-      <a href="#" class="nav-link underline-fill">CONTACT</a>
-    </nav>
+    <app-internal-work #drawer></app-internal-work>
+    <header
+      class="site-header"
+      [class.hidden]="!visible()"
+      [style.color]="layout.headerTheme()"
+      [style.background]="layout.headerBg()"
+      (mouseenter)="onMouseEnter()"
+      (mouseleave)="onMouseLeave()">
+      <a href="/" class="logo font-bold">BASIC/DEPT®</a>
+      <nav class="flex items-center gap-10 absolute left-1/2 -translate-x-1/2">
+        <a href="#" class="nav-link">WORK</a>
+        <a href="#" class="nav-link">ABOUT</a>
+        <a href="#" class="nav-link">NEWS</a>
+        <a href="#" class="nav-link">CONTACT</a>
+      </nav>
       <button class="menu-dots" (click)="drawer.open()" aria-label="Más opciones">···</button>
-  </header>
-`,
+    </header>
+  `,
   styles: `
-  .site-header {
-    position: fixed;
-    top: 0; left: 0; right: 0;
-    z-index: 100;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 24px 40px;
-    transition: color 0.3s ease, transform 0.4s ease, background 0.3s ease;
-  }
-  .site-header.hidden {
-    transform: translateY(-100%);
-  }
-  .logo, .nav-link, .menu-dots {
-    color: inherit;
-    text-decoration: none;
-  }
-  .nav-link {
-    position: relative;
-  }
-  .nav-link::after {
-    content: '';
-    position: absolute;
-    bottom: -2px; left: 0;
-    width: 0; height: 1px;
-    background: currentColor;
-    transition: width 0.3s ease;
-  }
-  .nav-link:hover::after {
-    width: 100%;
-  }
-
-  .menu-dots {
-    background: none;
-    border: none;
-    cursor: pointer;
-    font-size: 18px;
-    letter-spacing: 3px;
-    padding: 0;
-    transition: letter-spacing 0.3s ease;
-  }
-  .menu-dots:hover {
-    letter-spacing: 6px;
-  }
-`,
+    .site-header {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 24px 40px;
+      transition: color 0.3s ease, transform 0.4s ease, background 0.3s ease;
+    }
+    .site-header.hidden {
+      transform: translateY(-100%);
+    }
+    .logo, .nav-link, .menu-dots {
+      color: inherit;
+      text-decoration: none;
+    }
+    .nav-link {
+      position: relative;
+    }
+    .nav-link::after {
+      content: '';
+      position: absolute;
+      bottom: -2px;
+      left: auto;
+      right: 0;
+      width: 0;
+      height: 1px;
+      background: currentColor;
+      transition: width 0.3s ease;
+    }
+    .nav-link:hover::after {
+      left: 0;
+      right: auto;
+      width: 100%;
+    }
+    .menu-dots {
+      background: none;
+      border: none;
+      cursor: pointer;
+      font-size: 18px;
+      letter-spacing: 3px;
+      padding: 0;
+      transition: letter-spacing 0.3s ease;
+    }
+    .menu-dots:hover {
+      letter-spacing: 6px;
+    }
+  `,
 })
 export class Header {
   layout = inject(LayoutService);
